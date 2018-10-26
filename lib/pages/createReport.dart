@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateReport extends StatefulWidget {
+  final String _location;
+  CreateReport(this._location);
   @override
   _CreateReportState createState() => _CreateReportState();
 }
@@ -15,7 +17,6 @@ class _CreateReportState extends State<CreateReport> {
 
   String _title = "";
   String _info = "";
-  String _location = "GS Road";
 
   void _showSubmitDialog() {
     showDialog(
@@ -45,7 +46,7 @@ class _CreateReportState extends State<CreateReport> {
         await collectionReference.add({
           'title': _title,
           'information': _info,
-          'location': _location
+          'location': widget._location
         }).catchError((err) {
           print("Error $err");
         });
@@ -53,7 +54,7 @@ class _CreateReportState extends State<CreateReport> {
         // Navigator.pop(context);
       } else {
         print("Error");
-        showError("Enter Proper Event Data");
+        showError("Enter Proper Report Data");
       }
     }
   }
@@ -116,7 +117,7 @@ class _CreateReportState extends State<CreateReport> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Text("Location Selected:"),
+                  Text("Location Selected: ${widget._location}"),
                   SizedBox(
                     height: 40.0,
                   ),
