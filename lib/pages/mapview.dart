@@ -32,7 +32,7 @@ class _MapViewState extends State<MapView> {
           children: [
             new Padding(
               padding: new EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Tap to add pins"),
+              child: new Text(""),
             ),
             new Flexible(
               child: new FlutterMap(
