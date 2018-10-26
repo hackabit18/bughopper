@@ -1,3 +1,4 @@
+import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("FEEL SAFE"),
       ),
+      drawer: CustomDrawer(context),
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Center(
