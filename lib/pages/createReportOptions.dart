@@ -1,15 +1,17 @@
+import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
-class SelectLocation extends StatefulWidget {
+class CreateReportOptions extends StatefulWidget {
   @override
-  _SelectLocationState createState() => _SelectLocationState();
+  _CreateReportOptionsState createState() => _CreateReportOptionsState();
 }
 
-class _SelectLocationState extends State<SelectLocation> {
+class _CreateReportOptionsState extends State<CreateReportOptions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Select Location")),
+      drawer: CustomDrawer(context),
       body: Container(
         padding: EdgeInsets.all(80.0),
         child: Center(
