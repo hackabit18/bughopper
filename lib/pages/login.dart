@@ -8,7 +8,25 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignin = GoogleSignIn();
+
+  Future<FirebaseUser> _signIn() async {
+    GoogleSignInAccount googleSignInAccount = await googleSignin.signIn();
+    GoogleSignInAuthentication gSA = await googleSignInAccount.authentication;
+
+    FirebaseUser user = await _auth.signInWithGoogle(
+        idToken: gSA.idToken, accessToken: gSA.accessToken);
+
+    print("User Name : ${user.displayName}");
+    return user;
+  }
+
+  _signOut() {
+    googleSignin.signOut();
+    print("User Signed out");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +40,22 @@ class _LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             RaisedButton(
-              onPressed: null,
               child: Text("Sign In"),
+              onPressed: () => _signIn(),
             ),
-            Padding(
-              padding: EdgeInsets.all(10.0)
-            )
+            Padding(padding: EdgeInsets.all(10.0)),
+            RaisedButton(
+              child: Text("Sign Out"),
+              onPressed: () async {
+                try {
+                  await _signOut();
+                  await (FirebaseUser user) => print(user);
+                } catch (e) {
+                  print(e);
+                }
+              },
+            ),
+            Padding(padding: EdgeInsets.all(10.0))
           ],
         ),
       ),
