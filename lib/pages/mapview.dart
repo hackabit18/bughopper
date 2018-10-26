@@ -12,20 +12,22 @@ class _MapViewState extends State<MapView> {
 
   Widget build(BuildContext context) {
     var markers = tappedPoints.map((latlng) {
-      print("lat ${latlng.latitude} long ${latlng.longitude}");
       return new Marker(
         width: 80.0,
         height: 80.0,
         point: latlng,
         builder: (ctx) => new Container(
-          child: Icon(Icons.location_on,
-        ),
-      ));
+              child: Icon(
+                Icons.location_on,
+              ),
+            ),
+      );
     }).toList();
 
     return new Scaffold(
+      appBar: new AppBar(title: new Text("Tap to add pins")),
       body: new Padding(
-        padding: new EdgeInsets.all(4.0),
+        padding: new EdgeInsets.all(8.0),
         child: new Column(
           children: [
             new Padding(
@@ -37,12 +39,13 @@ class _MapViewState extends State<MapView> {
                 options: new MapOptions(
                     center: new LatLng(26.2006, 92.9376),
                     zoom: 7.0,
-                    ),
+                    onTap: _handleTap),
                 layers: [
                   new TileLayerOptions(
                     urlTemplate:
-                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                   ),
+                  new MarkerLayerOptions(markers: markers)
                 ],
               ),
             ),
@@ -50,5 +53,17 @@ class _MapViewState extends State<MapView> {
         ),
       ),
     );
+  }
+
+  void _handleTap(LatLng latlng) {
+    setState(() {
+      try{
+      tappedPoints.removeAt(0);
+      }catch(e){
+        print("empty");
+      }
+      print("Latitude : ${latlng.latitude} and Longitude : ${latlng.longitude}");
+      tappedPoints.add(latlng);
+    });
   }
 }
