@@ -1,3 +1,4 @@
+import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,6 +14,7 @@ class _CreateReportState extends State<CreateReport> {
       appBar: AppBar(
         title: Text("Create Report"),
       ),
+      drawer: CustomDrawer(context),
       body: ListView(
         children: <Widget>[
           Container(
