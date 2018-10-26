@@ -17,6 +17,26 @@ class _CreateReportState extends State<CreateReport> {
   String _info = "";
   String _location = "GS Road";
 
+  void _showSubmitDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Report successfully submitted"),
+          content: new Text("Thank you for contributing"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
   submitReport() async {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -29,7 +49,8 @@ class _CreateReportState extends State<CreateReport> {
         }).catchError((err) {
           print("Error $err");
         });
-        Navigator.pop(context);
+        _showSubmitDialog();
+        // Navigator.pop(context);
       } else {
         print("Error");
         showError("Enter Proper Event Data");
