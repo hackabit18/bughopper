@@ -18,9 +18,9 @@ class _ShowResultState extends State<ShowResult> {
   @override
   void initState() {
     super.initState();
-    key = "3ec0174b543a4af7a29f7437dc687ead";
+    key = "c0dd7cc7ac9d4795a2899b239ca25dd8";
     query =
-        "(+injured OR +killed OR +accident) AND (+${widget._location}) AND (-football OR -cricket OR -) AND ${widget._location}";
+        "(+injured OR +killed OR +accident) AND (+${widget._location}) AND (-football OR -cricket) AND ${widget._location}";
     url = "https://newsapi.org/v2/everything?q=$query&apiKey=$key";
     print(url);
     this.getJsonData();
@@ -29,12 +29,12 @@ class _ShowResultState extends State<ShowResult> {
   Future<String> getJsonData() async {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-    // print(response.body);
+    print(response.body);
 
     setState(() {
       var convertDataDataToJson = json.decode(response.body);
       data = convertDataDataToJson['articles'];
-      // print(data);
+      print(data);
     });
 
     return "Sucess";
