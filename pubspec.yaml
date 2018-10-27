@@ -27,7 +27,8 @@ dependencies:
   flutter_map:
   http:
   flutter_webview_plugin:
-
+  sms:
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
