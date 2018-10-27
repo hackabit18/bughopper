@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +13,15 @@ class ShowResult extends StatefulWidget {
 }
 
 class _ShowResultState extends State<ShowResult> {
-  String key, query, url;
+  StreamSubscription<QuerySnapshot> subscription;
+  bool t = true;
+
+  List<DocumentSnapshot> eventsData;
+  int _lengthOfEventsData = 0;
+
+  final CollectionReference collectionReference =
+      Firestore.instance.collection('reports');
+  String key, query, url, myText;
   List data = [];
   int length;
 
@@ -24,6 +34,14 @@ class _ShowResultState extends State<ShowResult> {
     url = "https://newsapi.org/v2/everything?q=$query&apiKey=$key";
     print(url);
     this.getJsonData();
+
+    subscription = collectionReference.snapshots().listen((datasnapshot) {
+      setState(() {
+        eventsData = datasnapshot.documents;
+        _lengthOfEventsData = eventsData.length;
+        print("len $_lengthOfEventsData");
+      });
+    });
   }
 
   Future<String> getJsonData() async {
@@ -37,34 +55,71 @@ class _ShowResultState extends State<ShowResult> {
       print(data);
     });
 
-    return "Sucess";
+    return "Success";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("News")),
-        drawer: CustomDrawer(context),
-        body: ListView.builder(
-            itemCount: data.length,
+      appBar: AppBar(
+        title: Text("News"),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text("t"),
+            onPressed: () {
+              setState(() {
+                t = !t;
+              });
+            },
+          )
+        ],
+      ),
+      drawer: CustomDrawer(context),
+      body: t
+          ? ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Text(data[index]['title']),
+                        Padding(
+                          padding: EdgeInsets.all(1.0),
+                        ),
+                        Text(data[index]['url']),
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )
+          : ListView.builder(
+            itemCount: _lengthOfEventsData,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Text(data[index]['title']),
+                      Text(eventsData[index].data['title']),
                       Padding(
                         padding: EdgeInsets.all(1.0),
                       ),
-                      Text(data[index]['url']),
+                      Text(eventsData[index].data['information']),
                       Padding(
                         padding: EdgeInsets.all(5.0),
-                      )
+                      ),
                     ],
                   ),
                 ),
               );
-            }));
+            },
+          ),
+    );
   }
 }
