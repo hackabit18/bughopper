@@ -32,27 +32,39 @@ class _ShowResultState extends State<ShowResult> {
     query =
         "(+injured OR +killed OR +accident) AND (+${widget._location}) AND (-football OR -cricket) AND ${widget._location}";
     url = "https://newsapi.org/v2/everything?q=$query&apiKey=$key";
-    print(url);
+    // print(url);
     this.getJsonData();
 
     subscription = collectionReference.snapshots().listen((datasnapshot) {
-      setState(() {
-        eventsData = datasnapshot.documents;
-        _lengthOfEventsData = eventsData.length;
-        print("len $_lengthOfEventsData");
+      Firestore.instance
+          .collection('/reports')
+          .where('locality', isEqualTo: widget._location)
+          .getDocuments()
+          .then((docs) {
+        setState(() {
+          eventsData = docs.documents;
+          _lengthOfEventsData = docs.documents.length;
+          // print("len $_lengthOfEventsData");
+        });
       });
     });
+    // fetch_firebase();
   }
+
+  // fetch_firebase() async {
+  //        var docs =  Firestore.instance.collection('/reports').where('locality', isEqualTo: 'Mesra').getDocuments();
+  //    print(docs.documents[0].data['title']);
+  // }
 
   Future<String> getJsonData() async {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-    print(response.body);
+    // print(response.body);
 
     setState(() {
       var convertDataDataToJson = json.decode(response.body);
       data = convertDataDataToJson['articles'];
-      print(data);
+      // print(data);
     });
 
     return "Success";
@@ -99,27 +111,31 @@ class _ShowResultState extends State<ShowResult> {
               },
             )
           : ListView.builder(
-            itemCount: _lengthOfEventsData,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Text(eventsData[index].data['title']),
-                      Padding(
-                        padding: EdgeInsets.all(1.0),
-                      ),
-                      Text(eventsData[index].data['information']),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                      ),
-                    ],
+              itemCount: _lengthOfEventsData,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Text(eventsData[index].data['title']),
+                        Padding(
+                          padding: EdgeInsets.all(1.0),
+                        ),
+                        Text(eventsData[index].data['information']),
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                        ),
+                        Text(eventsData[index].data['location']),
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
     );
   }
 }
