@@ -1,6 +1,14 @@
+import 'package:feel_safe/pages/homepage.dart';
+import 'package:feel_safe/pages/login.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() => runApp(new MyApp());
+var user;
+void main() async {
+  user = await FirebaseAuth.instance.currentUser();
+  print(user);
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -12,7 +20,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: null,
+      home: (user == null)? Login(): HomePage(),
     );
   }
 }

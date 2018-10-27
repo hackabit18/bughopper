@@ -1,5 +1,8 @@
+import 'package:feel_safe/pages/createReport.dart';
+import 'package:feel_safe/pages/mapview.dart';
 import 'package:flutter/material.dart';
 import 'package:feel_safe/services/locationinfo.dart';
+import 'package:geocoder/geocoder.dart';
 
 class CreateReportOptions extends StatefulWidget {
   @override
@@ -19,8 +22,9 @@ class _CreateReportOptionsState extends State<CreateReportOptions> {
             children: <Widget>[
               MaterialButton(
                 child: Text("Choose Current Location"),
-                onPressed: (){
-                  getCurrentLocation();
+                onPressed: () async {
+                  Address address = await getCurrentLocation();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CreateReport(address)));
                 },
                 color: Colors.blue,
               ),
@@ -28,7 +32,10 @@ class _CreateReportOptionsState extends State<CreateReportOptions> {
               MaterialButton(
                 child: Text("Choose Location on Map"),
                 color: Colors.blue,
-                onPressed: null,
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MapView(false)));
+                },
               )
             ],
           ),

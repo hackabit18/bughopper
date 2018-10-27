@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoder/geocoder.dart';
 
 class CreateReport extends StatefulWidget {
-  final String _location;
+  final Address _location;
   CreateReport(this._location);
   @override
   _CreateReportState createState() => _CreateReportState();
@@ -46,7 +47,7 @@ class _CreateReportState extends State<CreateReport> {
         await collectionReference.add({
           'title': _title,
           'information': _info,
-          'location': widget._location
+          'location': widget._location.addressLine
         }).catchError((err) {
           print("Error $err");
         });
@@ -117,7 +118,7 @@ class _CreateReportState extends State<CreateReport> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Text("Location Selected: ${widget._location}"),
+                  Text("Location Selected: ${widget._location.addressLine}"),
                   SizedBox(
                     height: 40.0,
                   ),
