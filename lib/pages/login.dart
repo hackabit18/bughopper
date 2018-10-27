@@ -20,16 +20,9 @@ class _LoginState extends State<Login> {
         idToken: gSA.idToken, accessToken: gSA.accessToken);
 
     print("User Name : ${user.displayName}");
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
     return user;
-  }
-
-  _signOut() async{
-    await googleSignin.signOut();
-    await googleSignin.disconnect();
-    Navigator.pop(context);
-    var user = await FirebaseAuth.instance.currentUser();
-    print("User Signed out $user");
   }
 
   Future<FirebaseUser> userData() {
@@ -40,34 +33,63 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Login Page"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        backgroundColor: Colors.grey.shade200,
+        body: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            RaisedButton(
-              child: Text("Sign In"),
-              onPressed: () => _signIn(),
+            Image.asset('assets/images/login_back.jpeg', fit: BoxFit.cover,colorBlendMode: BlendMode.darken,),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "FEEL SAFE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 65.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(50.0),
+                      child: Container(
+                        height: 50.0,
+                        child: InkWell(
+                          onTap: () {
+                            _signIn();
+                          },
+                          child: Material(
+                            borderRadius: BorderRadius.circular(40.0),
+                            shadowColor: Colors.greenAccent,
+                            color: Colors.green,
+                            elevation: 7.0,
+                            child: Center(
+                              child: Text(
+                                "SIGN IN",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Padding(padding: EdgeInsets.all(10.0)),
-            RaisedButton(
-              child: Text("Sign Out"),
-              onPressed: () async {
-                try {
-                  await _signOut();
-                } catch (e) {
-                  print(e);
-                }
-              },
-            ),
-            Padding(padding: EdgeInsets.all(10.0))
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
