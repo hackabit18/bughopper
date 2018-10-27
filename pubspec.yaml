@@ -25,6 +25,8 @@ dependencies:
   google_sign_in:
   cloud_firestore:
   flutter_map:
+  http:
+  flutter_webview_plugin:
 
 dev_dependencies:
   flutter_test:
