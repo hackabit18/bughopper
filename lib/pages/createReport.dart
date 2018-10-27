@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login.dart';
+import 'package:sms/sms.dart';
 
 FirebaseUser mCurrentUser;
 FirebaseAuth _auth;
@@ -39,7 +38,7 @@ class _CreateReportState extends State<CreateReport> {
   String _title = "";
   String _info = "";
 
-  void _showSubmitDialog() {
+  void _showSubmitDialog(String msg, String phoneNo) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -51,6 +50,16 @@ class _CreateReportState extends State<CreateReport> {
               child: new Text("Ok"),
               onPressed: () {
                 Navigator.of(context).pop();
+                SmsSender sender = new SmsSender();
+                SmsMessage message = new SmsMessage(phoneNo, msg.toString());
+                message.onStateChanged.listen((state) {
+                  if (state == SmsMessageState.Sent) {
+                    print("SMS is sent!");
+                  } else if (state == SmsMessageState.Delivered) {
+                    print("SMS is delivered!");
+                  }
+                });
+                sender.sendSms(message);
               },
             ),
           ],
@@ -66,18 +75,19 @@ class _CreateReportState extends State<CreateReport> {
     if (form.validate()) {
       form.save();
       if (_title.length > 0 && _info.length > 0) {
-        var x={
+        var x = {
           'title': _title,
           'information': _info,
           'location': widget._location.addressLine,
           'locality': widget._location.locality,
-          // 'reporter': temp,
+          'reporter': temp,
         };
         print(x);
         await collectionReference.add(x).catchError((err) {
           print("Error $err");
         });
-        _showSubmitDialog();
+        _showSubmitDialog(x.toString(),"+918721038382");
+        // SMS("Report", "+918721038382");
         // Navigator.pop(context);
       } else {
         print("Error");
