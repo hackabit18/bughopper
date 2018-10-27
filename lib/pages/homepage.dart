@@ -1,3 +1,4 @@
+import 'package:feel_safe/services/locationinfo.dart';
 import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,16 @@ class _HomePageState extends State<HomePage> {
                 child: Text("Choose on Map"),
                 color: Colors.blue,
                 onPressed: (){},
-              )
+              ),
+
+              Text("OR"),
+              MaterialButton(
+                onPressed: (){
+                  getCurrentLocation();
+                },
+                child: Text("Current Location"),
+                color: Colors.blue,
+              ),
             ],
           ),
         ),
