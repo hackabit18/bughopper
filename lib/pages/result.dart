@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 class ShowResult extends StatefulWidget {
@@ -51,10 +52,13 @@ class _ShowResultState extends State<ShowResult> {
     // fetch_firebase();
   }
 
-  // fetch_firebase() async {
-  //        var docs =  Firestore.instance.collection('/reports').where('locality', isEqualTo: 'Mesra').getDocuments();
-  //    print(docs.documents[0].data['title']);
-  // }
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   Future<String> getJsonData() async {
     var response = await http
@@ -74,10 +78,11 @@ class _ShowResultState extends State<ShowResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("News"),
+        title: t?Text("NEWS"):Text("REPORTS"),
         actions: <Widget>[
           MaterialButton(
-            child: Text("t"),
+            child: t?Text("REPORTS"):Text("NEWS"),
+            color: Colors.white,
             onPressed: () {
               setState(() {
                 t = !t;
@@ -92,19 +97,38 @@ class _ShowResultState extends State<ShowResult> {
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
+                  padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
                   child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Text(data[index]['title']),
-                        Padding(
-                          padding: EdgeInsets.all(1.0),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                data[index]['title'],
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.0),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                _launchURL(data[index]['url']);
+                              },
+                              child: Text(
+                                data[index]['url'],
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            )
+                          ],
                         ),
-                        Text(data[index]['url']),
-                        Padding(
-                          padding: EdgeInsets.all(5.0),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 );
@@ -114,23 +138,48 @@ class _ShowResultState extends State<ShowResult> {
               itemCount: _lengthOfEventsData,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
+                  padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
                   child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Text(eventsData[index].data['title']),
-                        Padding(
-                          padding: EdgeInsets.all(1.0),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                eventsData[index].data['title'],
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.0),
+                            ),
+                            Text(
+                              eventsData[index].data['information'],
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.0),
+                            ),
+                            Text(
+                              "Location:",
+                              style: TextStyle(
+                                  fontSize: 11.0, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              eventsData[index].data['location'],
+                              style: TextStyle(fontSize: 11.0),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.0),
+                            ),
+                          ],
                         ),
-                        Text(eventsData[index].data['information']),
-                        Padding(
-                          padding: EdgeInsets.all(5.0),
-                        ),
-                        Text(eventsData[index].data['location']),
-                        Padding(
-                          padding: EdgeInsets.all(5.0),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 );
