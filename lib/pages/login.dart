@@ -32,11 +32,6 @@ class _LoginState extends State<Login> {
     print("User Signed out $user");
   }
 
-  Future<FirebaseUser> userData() {
-    var user = FirebaseAuth.instance.currentUser();
-    return user;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

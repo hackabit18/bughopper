@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'login.dart';
-
-FirebaseUser mCurrentUser;
-FirebaseAuth _auth;
 
 class CreateReport extends StatefulWidget {
   final Address _location;
@@ -16,20 +10,6 @@ class CreateReport extends StatefulWidget {
 }
 
 class _CreateReportState extends State<CreateReport> {
-  @override
-  void initState() {
-    super.initState();
-    _auth = FirebaseAuth.instance;
-    // _getCurrentUser();
-  }
-
-  Future<String> getCurrentUser() async {
-    mCurrentUser = await _auth.currentUser();
-    String currUser = mCurrentUser.displayName.toString();
-    print(currUser);
-    return (currUser);
-  }
-
   final CollectionReference collectionReference =
       Firestore.instance.collection('reports');
 
@@ -58,23 +38,17 @@ class _CreateReportState extends State<CreateReport> {
       },
     );
   }
-
+  
   submitReport() async {
-    var temp = await getCurrentUser();
-    // print(temp);
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
       if (_title.length > 0 && _info.length > 0) {
-        var x={
+        await collectionReference.add({
           'title': _title,
           'information': _info,
-          'location': widget._location.addressLine,
-          'locality': widget._location.locality,
-          // 'reporter': temp,
-        };
-        print(x);
-        await collectionReference.add(x).catchError((err) {
+          'location': widget._location.addressLine
+        }).catchError((err) {
           print("Error $err");
         });
         _showSubmitDialog();
@@ -144,11 +118,7 @@ class _CreateReportState extends State<CreateReport> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Text(
-                    "Location Selected:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("${widget._location.addressLine}"),
+                  Text("Location Selected: ${widget._location.addressLine}"),
                   SizedBox(
                     height: 40.0,
                   ),
