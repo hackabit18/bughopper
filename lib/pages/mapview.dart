@@ -1,8 +1,16 @@
+import 'package:feel_safe/pages/createReport.dart';
+import 'package:feel_safe/pages/result.dart';
+import 'package:feel_safe/services/locationinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:latlong/latlong.dart';
 
 class MapView extends StatefulWidget {
+  //true results page
+  //false create page
+  bool resultsPage;
+  MapView(this.resultsPage);
   @override
   _MapViewState createState() => _MapViewState();
 }
@@ -25,7 +33,32 @@ class _MapViewState extends State<MapView> {
     }).toList();
 
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Tap to add pins")),
+      appBar: new AppBar(
+        title: new Text("Tap to add pins"),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text("ok"),
+            onPressed: () async {
+              print(tappedPoints[0]);
+
+              final coordinates = new Coordinates(
+                  tappedPoints[0].latitude, tappedPoints[0].longitude);
+              var addresses = await Geocoder.local
+                  .findAddressesFromCoordinates(coordinates);
+              var first = addresses.first;
+              if (widget.resultsPage) {
+                //go to results page
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ShowResult(first.locality)));
+              } else {
+                // go to success pages
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CreateReport(first)));
+              }
+            },
+          ),
+        ],
+      ),
       body: new Padding(
         padding: new EdgeInsets.all(8.0),
         child: new Column(
@@ -57,12 +90,13 @@ class _MapViewState extends State<MapView> {
 
   void _handleTap(LatLng latlng) {
     setState(() {
-      try{
-      tappedPoints.removeAt(0);
-      }catch(e){
+      try {
+        tappedPoints.removeAt(0);
+      } catch (e) {
         print("empty");
       }
-      print("Latitude : ${latlng.latitude} and Longitude : ${latlng.longitude}");
+      print(
+          "Latitude : ${latlng.latitude} and Longitude : ${latlng.longitude}");
       tappedPoints.add(latlng);
     });
   }

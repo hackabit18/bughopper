@@ -1,3 +1,4 @@
+import 'package:feel_safe/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -19,12 +20,16 @@ class _LoginState extends State<Login> {
         idToken: gSA.idToken, accessToken: gSA.accessToken);
 
     print("User Name : ${user.displayName}");
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
     return user;
   }
 
-  _signOut() {
-    googleSignin.signOut();
-    print("User Signed out");
+  _signOut() async{
+    await googleSignin.signOut();
+    await googleSignin.disconnect();
+    Navigator.pop(context);
+    var user = await FirebaseAuth.instance.currentUser();
+    print("User Signed out $user");
   }
 
   @override
@@ -49,7 +54,6 @@ class _LoginState extends State<Login> {
               onPressed: () async {
                 try {
                   await _signOut();
-                  await (FirebaseUser user) => print(user);
                 } catch (e) {
                   print(e);
                 }
