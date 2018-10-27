@@ -1,5 +1,5 @@
-import 'package:feel_safe/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:feel_safe/services/locationinfo.dart';
 
 class CreateReportOptions extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class _CreateReportOptionsState extends State<CreateReportOptions> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Select Location")),
-      drawer: CustomDrawer(context),
       body: Container(
         padding: EdgeInsets.all(80.0),
         child: Center(
@@ -20,7 +19,9 @@ class _CreateReportOptionsState extends State<CreateReportOptions> {
             children: <Widget>[
               MaterialButton(
                 child: Text("Choose Current Location"),
-                onPressed: null,
+                onPressed: (){
+                  getCurrentLocation();
+                },
                 color: Colors.blue,
               ),
               Text("OR"),
