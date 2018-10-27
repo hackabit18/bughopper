@@ -47,12 +47,12 @@ class _ShowResultState extends State<ShowResult> {
   Future<String> getJsonData() async {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
-    // print(response.body);
+    print(response.body);
 
     setState(() {
       var convertDataDataToJson = json.decode(response.body);
       data = convertDataDataToJson['articles'];
-      // print(data);
+      print(data);
     });
 
     return "Success";
