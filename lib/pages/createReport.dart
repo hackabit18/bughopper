@@ -71,7 +71,7 @@ class _CreateReportState extends State<CreateReport> {
           'information': _info,
           'location': widget._location.addressLine,
           'locality': widget._location.locality,
-          // 'reporter': temp,
+          'reporter': temp,
         };
         print(x);
         await collectionReference.add(x).catchError((err) {
