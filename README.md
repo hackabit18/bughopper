@@ -3,7 +3,7 @@
 The main idea behind this project is to allow people to get a brief idea about the previously happened accidents and crimes of place or a locality that is unknown to him/her. Through this app, one can know about the mishappenings that may have taken place at a particular location just by letting the app know of the location. If the user happens to observe any mishappening in any place, he can report that event though the app. The report is stored in an online database and also corresponding to the type of incident that has taken place, the nearby police station or hospital can be alerted so that quick action can be initiated.
     
 
-##The tools and technologies used in this project are:  
+## Tools and technologies used:  
     
     Flutter, Firebase and Dart.
 
@@ -60,9 +60,13 @@ The app shows information about the current locality.
 
 The report generated has the news of the mishaps that occured in last few months and also the reports sent by various users about the mishaps.
 
+<p float="left">
+    
 <img height="480px" src="./assets/readme/news.jpg" style="padding-left:10%">
 
-<img height="480px" src="./assets/readme/reports.jpg" style="padding-left:10%">  
+<img height="480px" src="./assets/readme/reports.jpg" style="padding-left:10%">
+
+</p>
 
 <br><br>
 
