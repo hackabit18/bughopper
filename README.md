@@ -55,10 +55,10 @@ The app shows the information about the place marked in the map.
 
 2. Current location - 
 
-The app show information about the current locality.
+The app shows information about the current locality.
 
 
-The report generated has the news of the mishaps that occured in last few months and also the reports send by various users about the mishaps.
+The report generated has the news of the mishaps that occured in last few months and also the reports sent by various users about the mishaps.
 
 <img height="480px" src="./assets/readme/news.jpg" style="padding-left:10%">
 
@@ -84,7 +84,7 @@ A person can report about a crime/accident by writing a short description of it.
 
 <br><br>
 
-Once the report is submitted, a notification id sent to the police(and hospital if needed).
+Once the report is submitted, a notification is sent to the police(and hospital if needed).
 
 <img height="480px" src="./assets/readme/report_success.jpg" style="padding-left:10%"> 
 
@@ -92,7 +92,7 @@ Once the report is submitted, a notification id sent to the police(and hospital 
 
 1. The app currently sends the message to and individual, but with updated database of all the police stations and hospitals it could be more efficient.
 
-2. With more and more people using it, the data of the mishaps would be could be updated to a large extend.
+2. With more and more people using it, the data of the mishaps would be could be updated to a large extent.
 
 3. Currently the reporter's details are shared with the police to avoid fake reports but that can be improved by making the reporter anonymous (as people donot want to be involved in the process of police investigation).
 
