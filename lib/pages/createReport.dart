@@ -19,7 +19,6 @@ class _CreateReportState extends State<CreateReport> {
   void initState() {
     super.initState();
     _auth = FirebaseAuth.instance;
-    // _getCurrentUser();
   }
 
   Future<String> getCurrentUser() async {
@@ -38,7 +37,7 @@ class _CreateReportState extends State<CreateReport> {
   String _title = "";
   String _info = "";
 
-  void _showSubmitDialog(String msg, String phoneNo) {
+  void _showSubmitDialog(String msg, String phoneNo) async{
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -49,7 +48,6 @@ class _CreateReportState extends State<CreateReport> {
             new FlatButton(
               child: new Text("Ok"),
               onPressed: () {
-                Navigator.of(context).pop();
                 SmsSender sender = new SmsSender();
                 SmsMessage message = new SmsMessage(phoneNo, msg.toString());
                 message.onStateChanged.listen((state) {
@@ -60,6 +58,7 @@ class _CreateReportState extends State<CreateReport> {
                   }
                 });
                 sender.sendSms(message);
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -86,9 +85,7 @@ class _CreateReportState extends State<CreateReport> {
         await collectionReference.add(x).catchError((err) {
           print("Error $err");
         });
-        _showSubmitDialog(x.toString(),"+918721038382");
-        // SMS("Report", "+918721038382");
-        // Navigator.pop(context);
+        _showSubmitDialog(x.toString(),"+91**********");
       } else {
         print("Error");
         showError("Enter Proper Report Data");
