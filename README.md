@@ -9,7 +9,7 @@ The main idea behind this project is to allow people to get a brief idea about t
 
 ## How to Run:
     
-To run the project:  
+To run the project:
 
 1. Clone the repository and navigate inside its directory.  
 
@@ -20,7 +20,11 @@ To run the project:
 
             $   flutter run
 
-* Note: The phone no. in the lib/pages/createReport.dart needs to be added in order to send the report to particular number.
+* Note: 
+
+        - Create a firebase project and add the google-services.json file to the android/app folder.
+        
+        - The phone no. in the lib/pages/createReport.dart needs to be added in order to send the report to particular number.
 
 ##  About the app:
 
