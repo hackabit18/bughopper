@@ -20,6 +20,8 @@ To run the project:
 
             $   flutter run
 
+* Note: The phone no. in the lib/pages/createReport.dart needs to be added in order to send the report to particular number.
+
 ##  About the app:
 
 Feel Safe is a mobile app for getting know of unknown locality. It gives us the collectio of all the mishaps that has occured on that locality for the last few months and gives the user a idea of how safe the place is.
@@ -67,7 +69,7 @@ The report generated has the news of the mishaps that occured in last few months
 
 #### 2. Reporting
 
-A person can report about a crime/accident by writing a short description of the mishap and a notification will be sent to the nearest police station and hospital (as needed).
+A person can report about a crime/accident by writing a short description of it.
 
 1. Current Location reporting - 
 
@@ -82,5 +84,14 @@ A person can report about a crime/accident by writing a short description of the
 
 <br><br>
 
+Once the report is submitted, a notification id sent to the police(and hospital if needed).
 
+<img height="480px" src="./assets/readme/report_success.jpg" style="padding-left:10%"> 
 
+## Future Scope:
+
+1. The app currently sends the message to and individual, but with updated database of all the police stations and hospitals it could be more efficient.
+
+2. With more and more people using it, the data of the mishaps would be could be updated to a large extend.
+
+3. Currently the reporter's details are shared with the police to avoid fake reports but that can be improved by making the reporter anonymous (as people donot want to be involved in the process of police investigation).
