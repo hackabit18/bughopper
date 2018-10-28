@@ -95,3 +95,7 @@ Once the report is submitted, a notification id sent to the police(and hospital 
 2. With more and more people using it, the data of the mishaps would be could be updated to a large extend.
 
 3. Currently the reporter's details are shared with the police to avoid fake reports but that can be improved by making the reporter anonymous (as people donot want to be involved in the process of police investigation).
+
+## License:
+
+Anyone who has access to our repository is free to use this software in any form. This project is entirely open source.
