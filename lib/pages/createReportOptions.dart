@@ -10,6 +10,48 @@ class CreateReportOptions extends StatefulWidget {
 }
 
 class _CreateReportOptionsState extends State<CreateReportOptions> {
+  Widget retButton(text, textColor, color, from) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Container(
+        height: 50.0,
+        child: InkWell(
+          onTap: () {
+            switch (from) {
+              case "current":
+                getCurrentLocation().then((address) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CreateReport(address)));
+                });
+                break;
+
+              case "choose":
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MapView(false)));
+                break;
+            }
+          },
+          child: Material(
+            borderRadius: BorderRadius.circular(40.0),
+            shadowColor: Colors.greenAccent,
+            color: color,
+            elevation: 7.0,
+            child: Center(
+              child: Text(
+                "$text",
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,23 +62,10 @@ class _CreateReportOptionsState extends State<CreateReportOptions> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              MaterialButton(
-                child: Text("Choose Current Location"),
-                onPressed: () async {
-                  Address address = await getCurrentLocation();
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CreateReport(address)));
-                },
-                color: Colors.blue,
-              ),
-              Text("OR"),
-              MaterialButton(
-                child: Text("Choose Location on Map"),
-                color: Colors.blue,
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MapView(false)));
-                },
-              )
+              retButton(
+                  "CURRENT LOCATION", Colors.white, Colors.blue, "current"),
+              Text("OR", style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Colors.grey),),
+              retButton("CHOOSE ON MAP", Colors.white, Colors.blue, "choose"),
             ],
           ),
         ),
