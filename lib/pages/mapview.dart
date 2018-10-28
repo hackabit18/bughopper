@@ -37,7 +37,8 @@ class _MapViewState extends State<MapView> {
         title: new Text("Tap to add pins"),
         actions: <Widget>[
           MaterialButton(
-            child: Text("ok"),
+            color: Colors.white,
+            child: Text("OK", style: TextStyle(fontSize: 20.0, fontFamily: "Montserrat",fontWeight: FontWeight.bold),),
             onPressed: () async {
               print(tappedPoints[0]);
 
