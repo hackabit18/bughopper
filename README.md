@@ -1,6 +1,6 @@
 # bughopper
 
-The main idea behind thsis project is to allow people to know about a place or a locality that is unknown to him/her. Through this app, one can know about the mishappenings that may have taken place at a particular location. He/she can also contribute his/her part by reporting an crime or incident if he/she happens to observe. The report will be stored in a database and also corresponding to the incident that has taken place, the nearby police station or hospital can be alerted so that quick action can be put initiated.
+The main idea behind this project is to allow people to get a brief idea about the previously happened accidents and crimes of place or a locality that is unknown to him/her. Through this app, one can know about the mishappenings that may have taken place at a particular location just by letting the app know of the location. If the user happens to observe any mishappening in any place, he can report that event though the app. The report is stored in an online database and also corresponding to the type of incident that has taken place, the nearby police station or hospital can be alerted so that quick action can be initiated.
     
 
 ##The tools and technologies used in this project are:  
@@ -24,8 +24,8 @@ To run the project:
 
 ##  About the app:
 
-Feel Safe is a mobile app for getting know of unknown locality. It gives us the collectio of all the mishaps that has occured on that locality for the last few months and gives the user a idea of how safe the place is.
-Moreover it has the functionality of reporting crimes and accidents directly from the app with a click of a button. The reporter has to give a brief description of the incident and a report is send to the nearest police station (and hospital if needed).
+Feel Safe is a mobile app for getting know of situations around an unknown locality. It gives us the collection of all the mishaps that has occured in that locality in the last few months and gives the user a idea of how safe the place is.
+Moreover it has the functionality of reporting crimes and accidents directly from the app with the click of a button. The reporter has to give a brief description of the incident and a report is send to the nearest police station (and hospital if needed).
 
 <img height="480px" src="./assets/readme/FeelSafe.jpeg" style="padding-left:10%">
 
